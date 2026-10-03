@@ -40,7 +40,7 @@ jobs:
           mkdir -p _site
           cp -r index.html css js assets data _site/
           # Generated files are rebuilt below; drop any local copies.
-          rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json _site/data/seneye.json
+          rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json _site/data/seneye.json _site/data/notebook.json
           # Version CSS/JS URLs by commit so browsers drop cached copies on
           # each deploy (Pages serves them with a 10-min max-age).
           v=${GITHUB_SHA::7}
@@ -52,6 +52,9 @@ jobs:
 
       - name: Water-quality reports
         run: python scripts/update_reports.py
+
+      - name: Lab notebook feed
+        run: python scripts/update_notebook.py
 
       - name: Puget Sound water temperature
         run: python scripts/update_field_water.py

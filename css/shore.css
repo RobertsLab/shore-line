@@ -200,6 +200,7 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 .post a.title:hover { color: var(--accent); text-decoration: underline; }
 .post .meta { margin: 2px 0 6px; }
 .post p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.posts.nb-grid { grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
 
 /* ---------- water-quality history ---------- */
 .wqh-controls { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -220,12 +221,6 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 .ig-item { min-width: 0; }
 .ig-item .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; }
 .ig-item blockquote.instagram-media:not(iframe) { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; }
-
-/* ---------- x ---------- */
-.x-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 16px; align-items: start; }
-.x-item { min-width: 0; }
-.x-item .twitter-tweet { margin: 0 !important; }
-.x-item blockquote.twitter-tweet { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; }
 
 /* ---------- research ---------- */
 .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
