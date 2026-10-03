@@ -28,10 +28,13 @@ function card(sys) {
 
   return el("article", { class: `card${live ? "" : " placeholder"}` },
     el("h3", { text: sys.name }),
-    el("div", { class: "reading" }, live ? sys.latest.temp_c.toFixed(1) : "––.–", el("small", { text: " °C" })),
+    // Without a sensor, show the setpoint (muted, labelled) rather than a blank.
+    el("div", { class: "reading" },
+      live ? sys.latest.temp_c.toFixed(1) : sys.setpoint_c != null ? sys.setpoint_c.toFixed(1) : "––.–",
+      el("small", { text: " °C" })),
     spark,
     el("div", { class: "sub", text: live ? `${setpoint} · ${ago(new Date(sys.latest.t))}` : "Sensor not yet connected" }),
-    live ? null : el("div", { class: "sub", text: setpoint }),
+    live ? null : el("div", { class: "sub", text: sys.setpoint_c != null ? `${setpoint} (default)` : setpoint }),
   );
 }
 

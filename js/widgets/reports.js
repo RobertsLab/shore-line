@@ -1,7 +1,7 @@
-import { ago, el, formatDate, freshness, setStatus, slots } from "../util.js";
+import { ago, el, formatDate, freshness, setStatus, slots, tankColor, TANK_ORDER } from "../util.js";
 
 // Columns for the per-tank table, in the order the posts report them.
-const PARAMS = [
+export const PARAMS = [
   ["salinity_ppt", "Sal ppt"],
   ["ph", "pH"],
   ["alkalinity", "Alk"],
@@ -15,16 +15,12 @@ const FLAG = {
   nitrite: (v) => v > 0.5,
   ph: (v) => v < 7.6 || v > 8.4,
 };
-const TANK_SWATCH = { blue: "#3B7DD8", yellow: "#E3B23C" };
-
-function swatch(name) {
-  const key = Object.keys(TANK_SWATCH).find((k) => name.toLowerCase().includes(k));
-  return key ? el("span", { class: "swatch", style: `background:${TANK_SWATCH[key]}`, "aria-hidden": "true" }) : null;
-}
+// Same per-tank color as the history chart, so a tank reads the same everywhere.
+const swatch = (name) => el("span", { class: "swatch", style: `background:${tankColor(name)}`, "aria-hidden": "true" });
 
 export function renderWaterQuality(data) {
   const { meta, body } = slots("wq");
-  const tanks = data.tanks || [];
+  const tanks = (data.tanks || []).slice().sort((a, b) => TANK_ORDER(a.tank, b.tank));
   if (!tanks.length) {
     body.replaceChildren(el("div", { class: "skeleton", text: "No tank readings found in recent posts." }));
     return;

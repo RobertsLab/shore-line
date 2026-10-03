@@ -98,3 +98,11 @@ export function openLightbox(src, caption) {
 document.getElementById("lightbox")?.addEventListener("click", (e) => {
   if (e.target.id === "lightbox" || e.target.tagName === "IMG") e.currentTarget.close();
 });
+
+// Tank identity colors (dataviz categorical slots 1-4, see css --s1..--s4).
+// Fixed per tank so a tank keeps its color when others drop out of view.
+const TANK_SLOT = { "Left Blue": 1, "Left Yellow": 2, "Right Blue": 3, "Right Yellow": 4 };
+export function tankColor(name) {
+  return `var(--s${TANK_SLOT[name] ?? 1})`;
+}
+export const TANK_ORDER = (a, b) => (TANK_SLOT[a] ?? 9) - (TANK_SLOT[b] ?? 9) || a.localeCompare(b);

@@ -18,7 +18,7 @@ import re
 import sys
 import urllib.error
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -29,6 +29,7 @@ FEED = os.environ.get(
 )
 N_POSTS = 12
 ACTIVE_DAYS = 45
+HISTORY_DAYS = 92  # the page shows 1 or 3 months
 NS = {
     "content": "http://purl.org/rss/1.0/modules/content/",
     "dc": "http://purl.org/dc/elements/1.1/",
@@ -120,6 +121,19 @@ def latest_by_tank(posts, active_days=ACTIVE_DAYS):
     return sorted(keep, key=lambda t: t["tank"])
 
 
+def history(posts, days=HISTORY_DAYS):
+    """Every parsed reading within the window, oldest first, for the chart."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    rows = []
+    for post in posts:
+        published = datetime.fromisoformat(post["published"])
+        if published < cutoff:
+            continue
+        for r in post["readings"]:
+            rows.append({"t": post["published"], "tank": r["tank"], "link": post["link"], "values": r["values"]})
+    return sorted(rows, key=lambda r: r["t"])
+
+
 def main():
     try:
         title, posts = parse(get(FEED))
@@ -132,6 +146,7 @@ def main():
         "source": FEED,
         "feed_title": title,
         "tanks": latest_by_tank(posts),
+        "history": history(posts),
         "posts": posts[:N_POSTS],
     })
     print(f"{len(posts)} posts, newest {posts[0]['published'] if posts else 'none'}")
