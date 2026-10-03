@@ -41,6 +41,11 @@ jobs:
           cp -r index.html css js assets data _site/
           # Generated files are rebuilt below; drop any local copies.
           rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json
+          # Version CSS/JS URLs by commit so browsers drop cached copies on
+          # each deploy (Pages serves them with a 10-min max-age).
+          v=${GITHUB_SHA::7}
+          sed -i -E "s#(css/shore\.css|js/main\.js)\"#\1?v=$v\"#g" _site/index.html
+          sed -i -E "s#(from \"[^\"]+\.js)\"#\1?v=$v\"#g" _site/js/*.js _site/js/widgets/*.js
 
       - name: Webcam frames
         run: python scripts/update_webcam.py
