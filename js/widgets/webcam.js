@@ -8,7 +8,7 @@ export function renderWebcam(data) {
   const { meta, body } = slots("webcam");
   const latest = data.latest;
   if (!latest) {
-    body.replaceChildren(el("div", { class: "skeleton", text: "No webcam frame available." }));
+    body.replaceChildren(el("div", { class: "skeleton", text: "No Tankcam frame available." }));
     setStatus("webcam", "bad", data.error || "no frame");
     return;
   }
@@ -23,11 +23,11 @@ export function renderWebcam(data) {
     level !== "ok" ? el("span", { class: `badge ${level}`, text: level === "warn" ? "delayed" : "stale" }) : null,
   );
 
-  const caption = `Tank room, camera ${latest.camera ?? ""}, ${stampText}`;
+  const caption = `Live Tankcam, camera ${latest.camera ?? ""}, ${stampText}`;
   const hero = el("div", { class: "cam-hero" },
     el("img", {
       src: latest.url,
-      alt: `Latest tank-room webcam frame, ${stampText}`,
+      alt: `Latest Tankcam frame from the tank room, ${stampText}`,
       onclick: () => openLightbox(latest.url, caption),
     }),
     el("span", { class: "stamp", text: stampText }));
