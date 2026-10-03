@@ -16,6 +16,14 @@ Published at **https://robertslab.github.io/shore-line/**.
 A static site (`index.html`, `css/`, `js/`) with no build step.
 [`.github/workflows/site.yml`](.github/workflows/site.yml) runs every 10 minutes. It fetches the live sources with the stdlib-only scripts in `scripts/`, writes the results into `_site/`, and deploys to GitHub Pages. Fetched data is **not committed**. If a source is down, the script republishes the copy that is currently live and marks it with an `error`, and the status dot for that feed turns amber or red.
 
+## Tankcam AI captions
+
+`scripts/caption_tankcam.py` runs in every build after the webcam step. It asks Claude (`claude-opus-5-5`, low effort, structured JSON output) to caption the latest frame. That happens at most once per 2-hour slot from 6 AM to 6 PM Pacific (7 a day, ~$2–3/month), and only when the frame has changed. The rest of the time it carries the published caption forward. The caption, an approximate oyster count (only when oysters are visible), and anomaly flags are added to `data/webcam.json` and shown under the snapshot, labelled "AI caption".
+
+- **Needs:** the `ANTHROPIC_API_KEY` Actions secret. Without it, the step skips quietly.
+- **Change the model:** set the `CAPTION_MODEL` env var on the workflow step.
+- **Caption immediately, ignoring the schedule:** `python scripts/caption_tankcam.py --force`. This needs the key in your environment and `pip install anthropic`.
+
 ## Seneye (Left Blue tank)
 
 The Seneye Web Server sits on a private UW address (`172.25.149.26`), which GitHub can't reach. So `scripts/collect_seneye.py` runs on a machine inside the network. It decodes the SWS WebSocket state, which has no JSON API, and keeps a 14-day series. `scripts/seneye_publish.sh` force-pushes that file as a single commit on the `seneye-data` branch. The site build mirrors it from the `SENEYE_URL` repo variable.
