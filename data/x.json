@@ -1,0 +1,12 @@
+{
+ "_comment": "Hand-curated X posts shown on the dashboard, in display order. Paste post URLs from https://x.com/genefish (x.com or twitter.com links both work); the first 'show' entries are embedded. X's embedded-timeline widget no longer renders and its read API is paid, so posts are picked by hand.",
+ "handle": "genefish",
+ "show": 3,
+ "posts": [
+  "https://x.com/genefish/status/2106202443130233327",
+  "https://x.com/genefish/status/2106199924412993885",
+  "https://x.com/genefish/status/2105807310392033728",
+  "https://x.com/genefish/status/2105400943059628384",
+  "https://x.com/genefish/status/2105368247172297189"
+ ]
+}

@@ -215,6 +215,18 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 .tooltip.multi b { display: block; margin-bottom: 2px; }
 .tooltip.multi i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
 
+/* ---------- instagram ---------- */
+.ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(326px, 100%), 1fr)); gap: 16px; align-items: start; }
+.ig-item { min-width: 0; }
+.ig-item .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; }
+.ig-item blockquote.instagram-media:not(iframe) { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; }
+
+/* ---------- x ---------- */
+.x-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 16px; align-items: start; }
+.x-item { min-width: 0; }
+.x-item .twitter-tweet { margin: 0 !important; }
+.x-item blockquote.twitter-tweet { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; }
+
 /* ---------- research ---------- */
 .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
 .feature { border: 1px solid var(--rule); border-radius: 10px; padding: 16px; background: var(--surface-2); }

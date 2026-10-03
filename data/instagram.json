@@ -1,0 +1,13 @@
+{
+ "_comment": "Hand-curated Instagram posts shown on the dashboard, in display order. Paste any public post or Reel URL from https://www.instagram.com/robertslab.safs/ ; the first 'show' entries are embedded. Stories and highlights cannot be embedded.",
+ "handle": "robertslab.safs",
+ "show": 3,
+ "posts": [
+  "https://www.instagram.com/reel/Ddmky7oSLak/",
+  "https://www.instagram.com/reel/DdZuoEeyvue/",
+  "https://www.instagram.com/reel/DdCdyrFBCMs/",
+  "https://www.instagram.com/reel/DaBmO1jBGzq/",
+  "https://www.instagram.com/reel/DZIzaZGo8Xm/",
+  "https://www.instagram.com/reel/DYNIEQsoN6M/"
+ ]
+}
