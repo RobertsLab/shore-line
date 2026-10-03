@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd job template: publish a seneye reading every 15 min.
+  Install with scripts/install_seneye_agent.sh (fills in the __PLACEHOLDERS__).
+  Remove:  launchctl unload ~/Library/LaunchAgents/com.robertslab.shore-seneye.plist
+  Log:     /tmp/shore-seneye.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.robertslab.shore-seneye</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__BIN__/seneye_publish.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHON</key>
+    <string>__PYTHON__</string>
+    <key>PATH</key>
+    <string>__PATH__</string>
+  </dict>
+  <key>StartInterval</key>
+  <integer>900</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/shore-seneye.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/shore-seneye.log</string>
+</dict>
+</plist>
