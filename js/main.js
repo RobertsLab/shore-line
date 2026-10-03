@@ -5,7 +5,6 @@ import { renderTanks } from "./widgets/tanks.js";
 import { renderReports, renderWaterQuality } from "./widgets/reports.js";
 import { renderWqHistory } from "./widgets/wqhistory.js";
 import { renderResearch } from "./widgets/research.js";
-import { renderInstagram } from "./widgets/instagram.js";
 import { renderNotebook } from "./widgets/notebook.js";
 
 // Each widget reads one JSON file; a failure only blanks that widget.
@@ -16,7 +15,6 @@ const WIDGETS = [
   { file: "data/tanks.json", extra: "data/seneye.json", feed: "tanks", render: renderTanks, ids: ["tanks"], refreshSec: 300 },
   { file: "data/reports.json", feed: "reports", render: (d) => { renderWaterQuality(d); renderReports(d); renderWqHistory(d); }, ids: ["wq", "reports", "wqh"], refreshSec: 900 },
   { file: "data/research.json", render: renderResearch, ids: ["research"] },
-  { file: "data/instagram.json", render: renderInstagram, ids: ["instagram"] },
   { file: "data/notebook.json", render: renderNotebook, ids: ["notebook"], refreshSec: 900 },
 ];
 
