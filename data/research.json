@@ -68,59 +68,6 @@
    ],
    "featured": true,
    "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/"
-  },
-  {
-   "title": "Cracking the case of the wasting sea stars: immune gene repertoires in susceptible and resistant species",
-   "authors": "Hannah Nowers",
-   "year": 2026,
-   "date": "2026-06-11",
-   "venue": "Roberts Lab undergraduate research, Spring 2026",
-   "type": "presentation",
-   "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/nowers-capstone.pdf",
-   "tags": [
-    "sea stars",
-    "wasting disease",
-    "immune genes",
-    "genomics",
-    "undergraduate"
-   ],
-   "featured": false,
-   "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/",
-   "links": [
-    {
-     "label": "Capstone paper (PDF)",
-     "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/nowers-capstone-paper.pdf"
-    },
-    {
-     "label": "GitHub repo",
-     "url": "https://github.com/hannahnowers/Seastar-capstone"
-    }
-   ]
-  },
-  {
-   "title": "Current Findings: Roberts Lab working reports",
-   "authors": "Roberts Lab",
-   "year": 2026,
-   "venue": "robertslab.github.io",
-   "type": "report",
-   "url": "https://robertslab.github.io/current-findings/",
-   "tags": [
-    "reports"
-   ],
-   "featured": false
-  },
-  {
-   "title": "Tank room and survival assay notebook (Jesse Lowe)",
-   "authors": "J. Lowe",
-   "year": 2026,
-   "venue": "genefish.wordpress.com",
-   "type": "notebook",
-   "url": "https://genefish.wordpress.com/author/jlowe50bd14a0c15/",
-   "tags": [
-    "water quality",
-    "survival assays"
-   ],
-   "featured": false
   }
  ]
 }

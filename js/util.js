@@ -24,6 +24,11 @@ export function el(tag, attrs = {}, ...children) {
   return node;
 }
 
+// replaceChildren() that skips null/false parts (the native one prints "null").
+export function fill(node, ...children) {
+  node.replaceChildren(...children.flat().filter((c) => c != null && c !== false));
+}
+
 export function slots(sectionId) {
   const root = document.getElementById(sectionId);
   return {

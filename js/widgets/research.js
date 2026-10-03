@@ -1,4 +1,4 @@
-import { el, slots } from "../util.js";
+import { el, fill, slots } from "../util.js";
 
 const TYPE_LABEL = {
   paper: "Paper", preprint: "Preprint", dataset: "Dataset", report: "Report", notebook: "Notebook",
@@ -57,7 +57,7 @@ export function renderResearch(data) {
   filters.append(...buttons);
   draw(null);
 
-  body.replaceChildren(
+  fill(body,
     featured.length ? el("div", { class: "featured" }, featured.map(feature)) : null,
     types.length > 1 ? filters : null,
     list,
