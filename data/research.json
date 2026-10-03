@@ -1,16 +1,101 @@
 {
- "_comment": "Hand-curated SHORE research outputs. Add an object to items[] for each paper, preprint, dataset or report. type: paper | preprint | dataset | report | notebook. Set featured: true for up to 3 items to show as large cards. Remove the placeholder entry once real items are added.",
+ "_comment": "Hand-curated SHORE research outputs. Add an object to items[] for each output. type: paper | preprint | dataset | report | notebook | presentation | poster. Set featured: true for up to 3 items to show as large cards. Optional links: [{label, url}] for extra files (paper, code).",
  "items": [
   {
-   "title": "Add the first SHORE publication here",
-   "authors": "Roberts Lab",
+   "title": "Can a Quick Metabolism Test Predict Which Oyster Families Survive? Using a simple dye assay to forecast heat-stress hardiness",
+   "authors": "SORMI-WRAC",
    "year": 2026,
-   "venue": "data/research.json",
-   "type": "paper",
-   "url": "https://github.com/RobertsLab/shore-line/blob/main/data/research.json",
-   "tags": ["placeholder"],
+   "date": "2026-07-22",
+   "venue": "sormi.science",
+   "type": "presentation",
+   "url": "https://sormi.science/Resazurin/code/04.1-resazurin-family-phenotype-prediction-slides.html",
+   "tags": [
+    "oysters",
+    "resazurin",
+    "heat stress",
+    "family survival",
+    "phenotype prediction"
+   ],
+   "featured": false
+  },
+  {
+   "title": "Do oysters get stressed when you shake them? Delayed metabolic response to tumbling in oyster seed",
+   "authors": "Noah Ozguner",
+   "year": 2026,
+   "date": "2026-06-11",
+   "venue": "Roberts Lab undergraduate research, Spring 2026",
+   "type": "poster",
+   "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/ozguner-poster.pdf",
+   "tags": [
+    "oysters",
+    "tumbling",
+    "metabolism",
+    "undergraduate"
+   ],
    "featured": true,
-   "placeholder": true
+   "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/"
+  },
+  {
+   "title": "What a heatwave does to an oyster's fuel tank: glycogen loss and recovery after 32 °C exposure",
+   "authors": "Hazel Abrahamson-Amerine",
+   "year": 2026,
+   "date": "2026-06-11",
+   "venue": "Roberts Lab undergraduate research, Spring 2026",
+   "type": "presentation",
+   "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/abrahamson-amerine.pdf",
+   "tags": [
+    "oysters",
+    "heat stress",
+    "glycogen",
+    "undergraduate"
+   ],
+   "featured": true,
+   "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/"
+  },
+  {
+   "title": "Can oysters be trained to take the heat? Thermal priming and metabolic response in Pacific oyster seed",
+   "authors": "Christina Zhang",
+   "year": 2026,
+   "date": "2026-06-11",
+   "venue": "Roberts Lab undergraduate research, Spring 2026",
+   "type": "poster",
+   "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/zhang-poster.pdf",
+   "tags": [
+    "oysters",
+    "thermal priming",
+    "metabolism",
+    "undergraduate"
+   ],
+   "featured": true,
+   "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/"
+  },
+  {
+   "title": "Cracking the case of the wasting sea stars: immune gene repertoires in susceptible and resistant species",
+   "authors": "Hannah Nowers",
+   "year": 2026,
+   "date": "2026-06-11",
+   "venue": "Roberts Lab undergraduate research, Spring 2026",
+   "type": "presentation",
+   "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/nowers-capstone.pdf",
+   "tags": [
+    "sea stars",
+    "wasting disease",
+    "immune genes",
+    "genomics",
+    "undergraduate"
+   ],
+   "featured": false,
+   "source": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/",
+   "links": [
+    {
+     "label": "Capstone paper (PDF)",
+     "url": "https://faculty.washington.edu/sr320/posts/frontpage/sr320-spring-undergrads/presentations/nowers-capstone-paper.pdf"
+    },
+    {
+     "label": "GitHub repo",
+     "url": "https://github.com/hannahnowers/Seastar-capstone"
+    }
+   ]
   },
   {
    "title": "Current Findings: Roberts Lab working reports",
@@ -19,7 +104,9 @@
    "venue": "robertslab.github.io",
    "type": "report",
    "url": "https://robertslab.github.io/current-findings/",
-   "tags": ["reports"],
+   "tags": [
+    "reports"
+   ],
    "featured": false
   },
   {
@@ -29,7 +116,10 @@
    "venue": "genefish.wordpress.com",
    "type": "notebook",
    "url": "https://genefish.wordpress.com/author/jlowe50bd14a0c15/",
-   "tags": ["water quality", "survival assays"],
+   "tags": [
+    "water quality",
+    "survival assays"
+   ],
    "featured": false
   }
  ]

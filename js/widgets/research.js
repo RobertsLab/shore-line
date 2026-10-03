@@ -2,7 +2,14 @@ import { el, slots } from "../util.js";
 
 const TYPE_LABEL = {
   paper: "Paper", preprint: "Preprint", dataset: "Dataset", report: "Report", notebook: "Notebook",
+  presentation: "Presentation", poster: "Poster",
 };
+
+// Optional extra files for an item (e.g. paper PDF, code repo).
+function extraLinks(item) {
+  if (!item.links?.length) return null;
+  return el("div", { class: "by" }, item.links.flatMap((l, i) => [i ? " · " : "", el("a", { href: l.url, text: l.label })]));
+}
 
 function link(item) {
   return item.doi ? `https://doi.org/${item.doi}` : item.url;
@@ -18,7 +25,9 @@ function feature(item) {
 
 export function renderResearch(data) {
   const { meta, body } = slots("research");
-  const items = (data.items || []).slice().sort((a, b) => (b.year || 0) - (a.year || 0));
+  // Newest first: full date when given, else year.
+  const when = (i) => i.date || String(i.year || "");
+  const items = (data.items || []).slice().sort((a, b) => when(b).localeCompare(when(a)));
   const featured = items.filter((i) => i.featured).slice(0, 3);
   const rest = items.filter((i) => !featured.includes(i));
   const types = [...new Set(rest.map((i) => i.type))];
@@ -32,7 +41,8 @@ export function renderResearch(data) {
       el("div", {},
         el("a", { href: link(i), text: i.title }), " ",
         el("span", { class: "badge", text: TYPE_LABEL[i.type] || i.type }),
-        el("div", { class: "by", text: [i.authors, i.venue].filter(Boolean).join(" · ") })))));
+        el("div", { class: "by", text: [i.authors, i.venue].filter(Boolean).join(" · ") }),
+        extraLinks(i)))));
 
   const filters = el("div", { class: "filters", role: "group", "aria-label": "Filter by type" });
   const buttons = [null, ...types].map((t) => el("button", {
