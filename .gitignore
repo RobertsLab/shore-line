@@ -1,0 +1,9 @@
+# Fetched by scripts/ at build time; never committed.
+data/webcam.json
+data/reports.json
+data/field-water.json
+assets/water-banner.svg
+_site/
+__pycache__/
+.DS_Store
+.claude/worktrees/

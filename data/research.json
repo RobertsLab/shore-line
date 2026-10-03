@@ -1,0 +1,36 @@
+{
+ "_comment": "Hand-curated SHORE research outputs. Add an object to items[] for each paper, preprint, dataset or report. type: paper | preprint | dataset | report | notebook. Set featured: true for up to 3 items to show as large cards. Remove the placeholder entry once real items are added.",
+ "items": [
+  {
+   "title": "Add the first SHORE publication here",
+   "authors": "Roberts Lab",
+   "year": 2026,
+   "venue": "data/research.json",
+   "type": "paper",
+   "url": "https://github.com/RobertsLab/shore-line/blob/main/data/research.json",
+   "tags": ["placeholder"],
+   "featured": true,
+   "placeholder": true
+  },
+  {
+   "title": "Current Findings: Roberts Lab working reports",
+   "authors": "Roberts Lab",
+   "year": 2026,
+   "venue": "robertslab.github.io",
+   "type": "report",
+   "url": "https://robertslab.github.io/current-findings/",
+   "tags": ["reports"],
+   "featured": false
+  },
+  {
+   "title": "Tank room and survival assay notebook (Jesse Lowe)",
+   "authors": "J. Lowe",
+   "year": 2026,
+   "venue": "genefish.wordpress.com",
+   "type": "notebook",
+   "url": "https://genefish.wordpress.com/author/jlowe50bd14a0c15/",
+   "tags": ["water quality", "survival assays"],
+   "featured": false
+  }
+ ]
+}

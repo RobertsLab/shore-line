@@ -1,0 +1,66 @@
+name: build and deploy
+
+# The site is rebuilt from scratch every 10 minutes: scripts fetch the live
+# sources into _site/ and the result is deployed straight to Pages. Fetched
+# data is never committed, so the history stays clean. If a source is down,
+# each script republishes the copy currently live on the site.
+
+on:
+  schedule:
+    # GitHub runs scheduled jobs late under load; expect 10-20 min in practice.
+    - cron: "*/10 * * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      OUT_DIR: _site/data
+      OUT_SVG: _site/assets/water-banner.svg
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Stage static files
+        run: |
+          mkdir -p _site
+          cp -r index.html css js assets data _site/
+          # Generated files are rebuilt below; drop any local copies.
+          rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json
+
+      - name: Webcam frames
+        run: python scripts/update_webcam.py
+
+      - name: Water-quality reports
+        run: python scripts/update_reports.py
+
+      - name: Puget Sound water temperature
+        run: python scripts/update_field_water.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

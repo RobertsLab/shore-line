@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHORE Dashboard</title>
+  <meta name="description" content="Live dashboard for the Shellfish Hardening & Organismal Resilience Experimentation Center (SHORE), Roberts Lab, University of Washington.">
+  <link rel="icon" href="assets/shore-logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/shore.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <div class="brand">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 6c-7 0-14 6-15 15 5-3 9-3 15 1 6-4 10-4 15-1-1-9-8-15-15-15z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M9 21c1 9 7 17 15 19 8-2 14-10 15-19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M4 42c4-3 8-3 12 0s8 3 12 0 8-3 12 0 4 2 4 2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <h1>SHORE</h1>
+          <p>Shellfish Hardening &amp; Organismal Resilience Experimentation Center · Roberts Lab, UW</p>
+        </div>
+      </div>
+      <ul class="status" id="status" aria-label="Data feed status">
+        <li data-feed="webcam"><span class="dot"></span>Webcam</li>
+        <li data-feed="tanks"><span class="dot"></span>Tank temps</li>
+        <li data-feed="reports"><span class="dot"></span>Water quality</li>
+        <li data-feed="field"><span class="dot"></span>Puget Sound</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <section class="panel span-7" id="webcam" aria-labelledby="webcam-h">
+        <div class="panel-head">
+          <h2 id="webcam-h">Tank room · live webcam</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading webcam…</div></div>
+      </section>
+
+      <section class="panel span-5" id="field" aria-labelledby="field-h">
+        <div class="panel-head">
+          <h2 id="field-h">Field · Puget Sound water</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading NOAA data…</div></div>
+      </section>
+
+      <section class="panel span-12" id="tanks" aria-labelledby="tanks-h">
+        <div class="panel-head">
+          <h2 id="tanks-h">Facility temperatures</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading…</div></div>
+      </section>
+
+      <section class="panel span-5" id="wq" aria-labelledby="wq-h">
+        <div class="panel-head">
+          <h2 id="wq-h">Latest tank water quality</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading…</div></div>
+      </section>
+
+      <section class="panel span-7" id="reports" aria-labelledby="reports-h">
+        <div class="panel-head">
+          <h2 id="reports-h">Water-quality &amp; tank-room reports</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading feed…</div></div>
+      </section>
+
+      <section class="panel span-12" id="research" aria-labelledby="research-h">
+        <div class="panel-head">
+          <h2 id="research-h">Research from SHORE</h2>
+          <span class="meta" data-slot="meta"></span>
+        </div>
+        <div data-slot="body"><div class="skeleton">Loading…</div></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>SHORE · <a href="https://github.com/RobertsLab">Roberts Lab</a> · School of Aquatic and Fishery Sciences, University of Washington</span>
+      <span>Data: <a href="https://tidesandcurrents.noaa.gov/">NOAA CO-OPS</a> · <a href="https://genefish.wordpress.com/">genefish</a> · <a href="https://github.com/RobertsLab/shore-line">source</a></span>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox">
+    <form method="dialog"><button class="sr-only">Close</button></form>
+    <img alt="">
+    <p></p>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

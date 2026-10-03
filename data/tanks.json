@@ -1,0 +1,12 @@
+{
+ "_comment": "PLACEHOLDER. No temperature loggers are connected yet. Replace status/latest/series per system once a logger feed exists; the dashboard reads this schema unchanged. setpoint_c and tolerance_c are null until the lab sets them.",
+ "updated_at": null,
+ "systems": [
+  {"id": "left-blue",    "name": "Left Blue tank",    "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
+  {"id": "right-blue",   "name": "Right Blue tank",   "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
+  {"id": "left-yellow",  "name": "Left Yellow tank",  "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
+  {"id": "right-yellow", "name": "Right Yellow tank", "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
+  {"id": "heat-exposure", "name": "Heat-exposure system", "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
+  {"id": "room-ambient", "name": "Tank room (air)",   "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []}
+ ]
+}
