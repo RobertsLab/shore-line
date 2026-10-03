@@ -8,7 +8,8 @@ when a new slot (06, 08, ... 18 h) has started since the published caption
 and the frame has changed. Otherwise the published caption is carried
 forward, so late cron runs catch up and a stale camera costs nothing.
 
-Needs ANTHROPIC_API_KEY (GitHub Actions secret). Without it, or on any API
+Needs ANTHROPIC_API_KEY (GitHub Actions secret), plus ANTHROPIC_WORKSPACE_ID
+(repo variable) if the key is not scoped to a workspace. Without it, or on any API
 error, the previous caption is kept and the build continues.
 
 Usage:
@@ -82,7 +83,11 @@ def published_caption():
 def ask_claude(image_url):
     import anthropic  # installed in the workflow; only needed when captioning
 
-    client = anthropic.Anthropic()
+    # A key that isn't scoped to a workspace must name one per request.
+    workspace = os.environ.get("ANTHROPIC_WORKSPACE_ID", "").strip()
+    client = anthropic.Anthropic(
+        default_headers={"anthropic-workspace-id": workspace} if workspace else None,
+    )
     response = client.beta.messages.create(
         model=MODEL,
         max_tokens=2000,

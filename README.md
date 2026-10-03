@@ -20,7 +20,7 @@ A static site (`index.html`, `css/`, `js/`) with no build step.
 
 `scripts/caption_tankcam.py` runs in every build after the webcam step. It asks Claude (`claude-opus-5-5`, low effort, structured JSON output) to caption the latest frame. That happens at most once per 2-hour slot from 6 AM to 6 PM Pacific (7 a day, ~$2–3/month), and only when the frame has changed. The rest of the time it carries the published caption forward. The caption, an approximate oyster count (only when oysters are visible), and anomaly flags are added to `data/webcam.json` and shown under the snapshot, labelled "AI caption".
 
-- **Needs:** the `ANTHROPIC_API_KEY` Actions secret. Without it, the step skips quietly.
+- **Needs:** the `ANTHROPIC_API_KEY` Actions secret. Without it, the step skips quietly. If the key isn't scoped to a workspace, also set the `ANTHROPIC_WORKSPACE_ID` repo variable.
 - **Change the model:** set the `CAPTION_MODEL` env var on the workflow step.
 - **Caption immediately, ignoring the schedule:** `python scripts/caption_tankcam.py --force`. This needs the key in your environment and `pip install anthropic`.
 
