@@ -68,7 +68,7 @@ export function renderReports(data) {
   meta.replaceChildren(el("a", { href: data.source.replace(/feed\/?$/, ""), text: data.feed_title || "genefish" }));
 
   body.replaceChildren(
-    el("ul", { class: "posts" }, posts.slice(0, 6).map((p) => el("li", { class: "post" },
+    el("ul", { class: "posts" }, posts.slice(0, 3).map((p) => el("li", { class: "post" },
       el("a", { class: "title", href: p.link, text: p.title }),
       el("div", { class: "meta", text: `${formatDate(new Date(p.published))} · ${p.author}` }),
       el("p", { text: p.summary }),
