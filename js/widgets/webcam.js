@@ -4,20 +4,6 @@ import { ago, el, formatTime, formatWhen, freshness, openLightbox, setStatus, sl
 const OK_MIN = 30;
 const WARN_MIN = 120;
 
-// local_time is gannet's naive Pacific timestamp "YYYY-MM-DD HH:MM".
-const frameTime = (f) => f.local_time.slice(11);
-const eventTime = (f) => `${f.local_time.slice(5, 10).replace("-", "/")} ${frameTime(f)}`;
-
-function thumb(f, label, short = frameTime) {
-  return el("button", {
-    type: "button",
-    "aria-label": `Enlarge ${label}`,
-    onclick: () => openLightbox(f.url, label),
-  },
-  el("img", { src: f.url, alt: "", loading: "lazy" }),
-  el("span", { text: short(f) }));
-}
-
 export function renderWebcam(data) {
   const { meta, body } = slots("webcam");
   const latest = data.latest;
@@ -46,15 +32,8 @@ export function renderWebcam(data) {
     }),
     el("span", { class: "stamp", text: stampText }));
 
-  const frames = (data.frames || []).slice(1);
-  const events = data.events || [];
-
   body.replaceChildren(
     hero,
-    frames.length ? el("p", { class: "strip-label", text: "Earlier frames" }) : null,
-    frames.length ? el("div", { class: "strip" }, frames.map((f) => thumb(f, `Frame ${f.local_time}`))) : null,
-    events.length ? el("p", { class: "strip-label", text: "Snapshot events" }) : null,
-    events.length ? el("div", { class: "strip" }, events.map((f) => thumb(f, `Snapshot ${f.local_time}`, eventTime))) : null,
     el("p", { class: "note" },
       "Images served from ",
       el("a", { href: data.source, text: "gannet" }),

@@ -5,8 +5,8 @@ Find the newest tank-room webcam frames on gannet and write data/webcam.json.
 gannet serves a plain Apache index with no CORS headers, so the browser
 cannot list it; this script does the listing and the page hotlinks the jpgs.
 
-  cam-srlab-*.jpg  timed frames, one every 5 min (older ones are moved off)
-  ss_push_*.jpg    motion / push snapshots, kept as "events"
+  cam-srlab-*.jpg  timed frames, one every 5 min (older ones are moved off);
+                   the newest usable one is published
 
 Usage:
     python scripts/update_webcam.py
@@ -23,8 +23,6 @@ sys.path.insert(0, os.path.dirname(__file__))
 from common import fallback, get, now_iso, write_json  # noqa: E402
 
 BASE = os.environ.get("WEBCAM_URL", "https://gannet.fish.washington.edu/v1_web/webcam/")
-N_FRAMES = 12
-N_EVENTS = 12
 # Partial or black frames come through at ~15 KB; real frames are ~450 KB.
 MIN_FRAME_BYTES = 60 * 1024
 
@@ -90,7 +88,6 @@ def main():
         r for r in rows
         if r["name"].startswith("cam-") and r["bytes"] >= MIN_FRAME_BYTES
     )
-    events = newest_first(r for r in rows if r["name"].startswith("ss_push_"))
 
     if not frames:
         fallback("webcam.json", "no usable cam-* frames in listing")
@@ -107,8 +104,6 @@ def main():
         "updated_at": now_iso(),
         "source": BASE,
         "latest": latest,
-        "frames": [entry(r) for r in frames[:N_FRAMES]],
-        "events": [entry(r) for r in events[:N_EVENTS]],
     })
     print(f"latest frame {latest['url']} ({latest['captured_at']})")
     return 0

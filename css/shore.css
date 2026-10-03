@@ -132,17 +132,6 @@ main { padding: 24px 0 48px; }
   background: rgba(11, 27, 34, .72); color: #EAF4F7;
   font: 12px var(--mono); padding: 4px 8px; border-radius: 6px;
 }
-.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 12px; }
-.strip button {
-  padding: 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
-  background: var(--surface-2); cursor: zoom-in; aspect-ratio: 4 / 3; position: relative;
-}
-.strip button img { width: 100%; height: 100%; object-fit: cover; }
-.strip button span {
-  position: absolute; inset: auto 0 0 0; background: rgba(11, 27, 34, .7);
-  color: #EAF4F7; font: 10px var(--mono); padding: 2px 4px; text-align: left;
-}
-.strip-label { margin: 16px 0 0; font: 600 11px var(--mono); letter-spacing: 1.5px; color: var(--ink-3); text-transform: uppercase; }
 
 dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(96vw, 1400px); }
 dialog.lightbox::backdrop { background: rgba(5, 15, 20, .85); }
