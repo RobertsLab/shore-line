@@ -206,10 +206,13 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 .tooltip.multi i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
 
 /* ---------- instagram ---------- */
-.ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(326px, 100%), 1fr)); gap: 16px; align-items: start; }
-.ig-item { min-width: 0; }
-.ig-item .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; }
-.ig-item blockquote.instagram-media:not(iframe) { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; }
+/* Instagram's embed has a fixed ~326px minimum width, so each one is laid
+   out at that width and scaled down; JS sets the box height to match. */
+.ig-grid { --ig-scale: 0.55; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.ig-item { width: calc(326px * var(--ig-scale)); height: calc(560px * var(--ig-scale)); overflow: hidden; border-radius: 8px; flex: none; }
+.ig-scale { width: 326px; transform: scale(var(--ig-scale)); transform-origin: top left; }
+.ig-scale .instagram-media { margin: 0 !important; min-width: 326px !important; max-width: 326px !important; width: 326px !important; }
+.ig-scale blockquote.instagram-media { padding: 16px; border: 1px solid var(--rule); border-radius: 10px; font-size: 22px; }
 
 /* ---------- research ---------- */
 .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }

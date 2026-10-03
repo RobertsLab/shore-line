@@ -18,12 +18,24 @@ function loadEmbedScript() {
 
 function embed(url) {
   const permalink = url.replace(/\?.*$/, "").replace(/\/?$/, "/");
-  return el("div", { class: "ig-item" },
+  return el("div", { class: "ig-item" }, el("div", { class: "ig-scale" },
     el("blockquote", {
       class: "instagram-media",
       "data-instgrm-permalink": `${permalink}?utm_source=ig_embed`,
       "data-instgrm-version": "14",
-    }, el("a", { href: permalink, text: "View this post on Instagram" })));
+    }, el("a", { href: permalink, text: "View this post on Instagram" }))));
+}
+
+// The embeds are scaled with a transform, which doesn't shrink layout size;
+// keep each box's height in step with its (resizing) embed.
+function fitHeights(grid) {
+  const scale = parseFloat(getComputedStyle(grid).getPropertyValue("--ig-scale")) || 1;
+  const ro = new ResizeObserver((entries) => {
+    for (const { target } of entries) {
+      target.parentElement.style.height = `${Math.ceil(target.offsetHeight * scale)}px`;
+    }
+  });
+  grid.querySelectorAll(".ig-scale").forEach((n) => ro.observe(n));
 }
 
 export function renderInstagram(data) {
@@ -32,8 +44,9 @@ export function renderInstagram(data) {
   const posts = (data.posts || []).slice(0, data.show || 3);
   meta.replaceChildren(el("a", { href: profile, text: `@${data.handle}` }));
 
+  const grid = el("div", { class: "ig-grid" }, posts.map(embed));
   body.replaceChildren(
-    el("div", { class: "ig-grid" }, posts.map(embed)),
+    grid,
     el("p", { class: "note" },
       el("a", { href: profile, text: `More on Instagram →` }),
       " · Posts are picked in ",
@@ -41,6 +54,7 @@ export function renderInstagram(data) {
       "."),
   );
 
+  fitHeights(grid);
   loadEmbedScript()
     .then((ig) => ig?.Embeds.process())
     .catch(() => {
