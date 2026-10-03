@@ -208,7 +208,7 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 /* ---------- instagram ---------- */
 /* Instagram's embed has a fixed ~326px minimum width, so each one is laid
    out at that width and scaled down; JS sets the box height to match. */
-.ig-grid { --ig-scale: 0.55; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.ig-grid { --ig-scale: 0.45; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
 .ig-item { width: calc(326px * var(--ig-scale)); height: calc(560px * var(--ig-scale)); overflow: hidden; border-radius: 8px; flex: none; }
 .ig-scale { width: 326px; transform: scale(var(--ig-scale)); transform-origin: top left; }
 .ig-scale .instagram-media { margin: 0 !important; min-width: 326px !important; max-width: 326px !important; width: 326px !important; }
