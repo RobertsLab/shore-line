@@ -1,8 +1,8 @@
 import { ago, el, fill, formatTime, formatWhen, freshness, openLightbox, setStatus, slots } from "../util.js";
 
-// Frames arrive every 5 min; latest.jpg is checked every ~10 min by Actions.
-const OK_MIN = 30;
-const WARN_MIN = 120;
+// Frames arrive every hour; latest.jpg is checked every ~10 min by Actions.
+const OK_MIN = 90;
+const WARN_MIN = 180;
 
 // AI caption from scripts/caption_tankcam.py (every 2 h, 6 AM-6 PM Pacific).
 function captionBlock(c, latest) {
@@ -37,7 +37,7 @@ export function renderWebcam(data) {
 
   const stampText = captured ? `${formatWhen(captured)} · ${ago(captured)}` : latest.local_time;
   fill(meta,
-    "Frames every 5 min ",
+    "Frame updated every hour ",
     level !== "ok" ? el("span", { class: `badge ${level}`, text: level === "warn" ? "delayed" : "stale" }) : null,
   );
 
