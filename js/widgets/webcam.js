@@ -1,6 +1,6 @@
 import { ago, el, fill, formatTime, formatWhen, freshness, openLightbox, setStatus, slots } from "../util.js";
 
-// Frames arrive every 5 min; the listing is scraped every ~10 min by Actions.
+// Frames arrive every 5 min; latest.jpg is checked every ~10 min by Actions.
 const OK_MIN = 30;
 const WARN_MIN = 120;
 
@@ -37,11 +37,11 @@ export function renderWebcam(data) {
 
   const stampText = captured ? `${formatWhen(captured)} · ${ago(captured)}` : latest.local_time;
   fill(meta,
-    `Camera ${latest.camera ?? "?"} · frames every 5 min `,
+    "Frames every 5 min ",
     level !== "ok" ? el("span", { class: `badge ${level}`, text: level === "warn" ? "delayed" : "stale" }) : null,
   );
 
-  const caption = `Live Tankcam, camera ${latest.camera ?? ""}, ${stampText}`;
+  const caption = `Live Tankcam, ${stampText}`;
   const hero = el("div", { class: "cam-hero" },
     el("img", {
       src: latest.url,

@@ -8,7 +8,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 
 | Panel | Source | Updates | Notes |
 |---|---|---|---|
-| **Live Tankcam** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`; `update_webcam.py` finds the newest frame in the gannet folder listing | Every site rebuild (~10–20 min); page re-checks every 60 s | Single latest snapshot with a stale badge. **AI caption** below it (see §3). |
+| **Live Tankcam** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`; `update_webcam.py` points at `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Single latest snapshot with a stale badge. **AI caption** below it (see §3). |
 | **Latest tank water quality** | Values parsed from Jesse Lowe's tank-room posts (genefish RSS) | Every rebuild | Salinity, pH, alkalinity, NH₃, NO₂⁻, NO₃⁻ for each of the 4 tanks; "!" flags values outside thresholds |
 | **Facility temperatures** | `data/tanks.json` (hand-edited) + seneye feed | Seneye every 15 min | **Left Blue is live** (seneye). The other blue/yellow tanks show an 11 °C default setpoint. The heat-exposure system and room air are placeholders. |
 | **Field · Puget Sound water** | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend); adapted from `sr320/sr320` | Every rebuild | Headline reading + interactive 7-day chart; also writes the profile-style banner SVG |
@@ -80,7 +80,7 @@ The Seneye Web Server is on a private UW address (`172.25.149.26`), which GitHub
 ## 6. Decisions made
 
 - **Hosting:** GitHub Pages under `RobertsLab`, public.
-- **Tankcam:** gannet folder-listing scraper (no `latest.jpg` symlink on gannet). Single latest snapshot, renamed "Live Tankcam".
+- **Tankcam:** points at gannet's `latest.jpg` (replaced the folder-listing scraper). Single latest snapshot, renamed "Live Tankcam".
 - **Layout order:** Tankcam + latest water quality → facility temperatures → Puget Sound + reports → water-quality history → lab notebook → research.
 - **Captions:** Opus 5.5, every 2 h from 6 AM to 6 PM, current flag sensitivity kept.
 - **Social:** no embeds; Instagram link in the footer only.

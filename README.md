@@ -5,7 +5,7 @@ Published at **https://robertslab.github.io/shore-line/**.
 
 | Widget | Source | Refresh |
 |---|---|---|
-| Live Tankcam | gannet `v1_web/webcam/` directory listing → `data/webcam.json` | site rebuild every ~10 min; page re-polls every 60 s |
+| Live Tankcam | gannet `v1_web/webcam/latest.jpg` (Last-Modified header) → `data/webcam.json` | site rebuild every ~10 min; page re-polls every 60 s |
 | Puget Sound water temp | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend) → `data/field-water.json` + `assets/water-banner.svg` | every rebuild |
 | Water-quality reports + per-tank readings | genefish RSS (Jesse Lowe) → `data/reports.json` | every rebuild |
 | Facility temperatures | `data/tanks.json` (setpoints, placeholders); **Left Blue is live** from a seneye → `seneye-data` branch → `data/seneye.json` | collector every 15 min |
