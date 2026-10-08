@@ -127,11 +127,6 @@ main { padding: 24px 0 48px; }
 /* ---------- webcam ---------- */
 .cam-hero { position: relative; border-radius: 8px; overflow: hidden; background: var(--surface-2); aspect-ratio: 16 / 9; }
 .cam-hero img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
-.cam-hero .stamp {
-  position: absolute; left: 10px; bottom: 10px;
-  background: rgba(11, 27, 34, .72); color: #EAF4F7;
-  font: 12px var(--mono); padding: 4px 8px; border-radius: 6px;
-}
 
 dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(96vw, 1400px); }
 dialog.lightbox::backdrop { background: rgba(5, 15, 20, .85); }

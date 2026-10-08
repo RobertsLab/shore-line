@@ -47,8 +47,7 @@ export function renderWebcam(data) {
       src: latest.url,
       alt: `Latest Tankcam frame from the tank room, ${stampText}`,
       onclick: () => openLightbox(latest.url, caption),
-    }),
-    el("span", { class: "stamp", text: stampText }));
+    }));
 
   fill(body,
     hero,
