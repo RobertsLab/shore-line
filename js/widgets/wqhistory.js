@@ -2,11 +2,13 @@ import { el, formatDate, slots, tankColor, TANK_ORDER, TZ } from "../util.js";
 
 // Parameter tabs. zero: anchor the y-axis at 0 (counts / concentrations);
 // pH and salinity use the data range so small changes stay visible.
+// concern: level at or above which a reading is worth acting on; drawn as a
+// dashed line with the region above it shaded.
 const PARAMS = [
   { key: "ph", label: "pH", unit: "", zero: false },
-  { key: "nitrate", label: "Nitrate", unit: "ppm", zero: true },
-  { key: "nitrite", label: "Nitrite", unit: "ppm", zero: true },
-  { key: "ammonia", label: "Ammonia", unit: "ppm", zero: true },
+  { key: "nitrate", label: "Nitrate", unit: "ppm", zero: true, concern: 50 },
+  { key: "nitrite", label: "Nitrite", unit: "ppm", zero: true, concern: 1 },
+  { key: "ammonia", label: "Ammonia", unit: "ppm", zero: true, concern: 1 },
   { key: "alkalinity", label: "Alkalinity", unit: "ppm", zero: true },
   { key: "salinity_ppt", label: "Salinity", unit: "ppt", zero: false },
 ];
@@ -48,6 +50,7 @@ function draw(container, rows, param, days) {
 
   const vs = pts.map((p) => p.v);
   let lo = param.zero ? 0 : Math.min(...vs), hi = Math.max(...vs);
+  if (param.concern != null) hi = Math.max(hi, param.concern * 1.2);
   if (hi - lo < (param.zero ? 1 : 0.4)) { hi += param.zero ? 1 : 0.2; lo -= param.zero ? 0 : 0.2; }
   const step = niceStep(hi - lo);
   lo = Math.floor(lo / step) * step;
@@ -65,6 +68,15 @@ function draw(container, rows, param, days) {
     svg.append(s("line", { class: "grid-line", x1: pad.l, x2: W - pad.r, y1: py(v), y2: py(v) }));
     const lab = s("text", { class: "axis", x: pad.l - 6, y: py(v) + 4, "text-anchor": "end" });
     lab.textContent = +v.toFixed(2);
+    svg.append(lab);
+  }
+  if (param.concern != null) {
+    const y = py(param.concern);
+    svg.append(
+      s("rect", { class: "concern-zone", x: pad.l, y: pad.t, width: W - pad.l - pad.r, height: Math.max(y - pad.t, 0) }),
+      s("line", { class: "concern", x1: pad.l, x2: W - pad.r, y1: y, y2: y }));
+    const lab = s("text", { class: "concern-label", x: pad.l + 6, y: y - 5 });
+    lab.textContent = `Concern ≥ ${param.concern} ${param.unit}`;
     svg.append(lab);
   }
   // weekly ticks
@@ -130,7 +142,8 @@ function draw(container, rows, param, days) {
     tip.replaceChildren(
       el("b", { text: formatDate(new Date(day.t)) }),
       ...day.rows.slice().sort((a, b) => TANK_ORDER(a.tank, b.tank)).map((r) =>
-        el("div", {}, el("i", { style: `background:${tankColor(r.tank)}` }), `${r.tank}: ${r.v}${param.unit ? ` ${param.unit}` : ""}`)),
+        el("div", param.concern != null && r.v >= param.concern ? { class: "over" } : {},
+          el("i", { style: `background:${tankColor(r.tank)}` }), `${r.tank}: ${r.v}${param.unit ? ` ${param.unit}` : ""}`)),
     );
     tip.hidden = false;
     tip.style.left = `${Math.min(Math.max((x / W) * 100, 12), 88)}%`;
@@ -171,7 +184,8 @@ export function renderWqHistory(data) {
   };
 
   const render = () => {
-    meta.textContent = `${state.param.label}${state.param.unit ? ` (${state.param.unit})` : ""} · last ${state.range.label}`;
+    const { label, unit, concern } = state.param;
+    meta.textContent = `${label}${unit ? ` (${unit})` : ""}${concern != null ? ` · concern ≥ ${concern}` : ""} · last ${state.range.label}`;
     draw(chart, rows, state.param, state.range.days);
   };
 
