@@ -4,6 +4,7 @@ data/reports.json
 data/field-water.json
 data/seneye.json
 data/notebook.json
+data/logbook.json
 assets/water-banner.svg
 _site/
 __pycache__/

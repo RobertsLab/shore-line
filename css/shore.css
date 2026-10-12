@@ -213,6 +213,19 @@ table.wq td.flag { color: var(--warn); font-weight: 700; }
 .tooltip.multi i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
 
 /* ---------- research ---------- */
+/* Logbook */
+.lb-head { display: flex; flex-wrap: wrap; gap: 12px 40px; align-items: end; justify-content: space-between; margin-bottom: 14px; }
+.lb-last { display: block; font: 700 30px/1.15 var(--mono); }
+.lb-weeks { display: flex; gap: 5px; margin: 6px 0 0; padding: 0; list-style: none; }
+.lb-weeks li { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--rule); background: var(--surface-2); }
+.lb-weeks li.on { background: var(--accent); border-color: var(--accent); }
+table.lb tbody + tbody { border-top: 2px solid var(--rule); }
+table.lb th[scope="rowgroup"] { vertical-align: top; font-weight: 600; }
+table.lb th small { color: var(--ink-3); font-weight: 400; }
+table.lb { width: auto; min-width: min(560px, 100%); }
+table.lb th, table.lb td { text-align: left; padding-right: 20px; }
+table.lb .lb-notes { text-align: left; white-space: normal; min-width: 14em; color: var(--ink-2); }
+
 .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
 .feature { border: 1px solid var(--rule); border-radius: 10px; padding: 16px; background: var(--surface-2); }
 .feature.placeholder { border-style: dashed; background: transparent; }

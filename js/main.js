@@ -6,6 +6,7 @@ import { renderReports, renderWaterQuality } from "./widgets/reports.js";
 import { renderWqHistory } from "./widgets/wqhistory.js";
 import { renderResearch } from "./widgets/research.js";
 import { renderNotebook } from "./widgets/notebook.js";
+import { renderLogbook } from "./widgets/logbook.js";
 
 // Each widget reads one JSON file; a failure only blanks that widget.
 const WIDGETS = [
@@ -14,6 +15,7 @@ const WIDGETS = [
   // seneye.json is optional: absent until a collector is publishing it.
   { file: "data/tanks.json", extra: "data/seneye.json", feed: "tanks", render: renderTanks, ids: ["tanks"], refreshSec: 300 },
   { file: "data/reports.json", feed: "reports", render: (d) => { renderWaterQuality(d); renderReports(d); renderWqHistory(d); }, ids: ["wq", "reports", "wqh"], refreshSec: 900 },
+  { file: "data/logbook.json", feed: "logbook", render: renderLogbook, ids: ["logbook"], refreshSec: 1800 },
   { file: "data/research.json", render: renderResearch, ids: ["research"] },
   { file: "data/notebook.json", render: renderNotebook, ids: ["notebook"], refreshSec: 900 },
 ];

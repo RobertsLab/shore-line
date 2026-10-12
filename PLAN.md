@@ -14,6 +14,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 | **Field · Puget Sound water** | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend); adapted from `sr320/sr320` | Every rebuild | Headline reading + interactive 7-day chart; also writes the profile-style banner SVG |
 | **Water-quality & tank-room reports** | Jesse Lowe's genefish RSS | Every rebuild | 3 latest posts |
 | **Tank water quality · history** | The same parsed readings, ~3 months | Every rebuild | Chart by parameter, 1 or 3 months, fixed colors per tank |
+| **Tank-room logbook · weekly** | Public Google Sheet ([logbook](https://docs.google.com/spreadsheets/d/1S4Vl6K1NDTF3M6jTGDE0k0quQgOlQvjmN5Kka9JTBhg/edit#gid=0)), read as CSV | Every rebuild; the sheet itself is filled in about weekly | Last entry, a 12-week check-in strip, and the 4 most recent log dates (empty columns hidden). Logbook status dot: ok ≤ 8 days, warn ≤ 15 |
 | **Lab notebook · latest posts** | Site-wide genefish RSS (all authors) | Every rebuild | 6 latest posts |
 | **Research from SHORE** | `data/research.json` (hand-edited) | On edit | Featured cards + filterable list. **Still has a placeholder entry.** |
 | Header / footer | — | — | SHORE*line* wordmark, a status dot per feed (Tankcam, tank temps, water quality, Puget Sound), and an Instagram @robertslab.safs link in the footer |
@@ -34,6 +35,7 @@ Tried and removed: the X (@genefish) panel (X's embedded timeline no longer work
 | `caption_tankcam.py` | Adds `caption` to `webcam.json` (Claude, see §3) |
 | `update_reports.py` | `reports.json` (posts, per-tank latest readings, ~3-month history) |
 | `update_notebook.py` | `notebook.json` |
+| `update_logbook.py` | `logbook.json` (tank-room logbook sheet) |
 | `update_field_water.py` | `field-water.json` + `assets/water-banner.svg` |
 | `update_seneye.py` | `seneye.json`, copied from the seneye data branch (§4) |
 
