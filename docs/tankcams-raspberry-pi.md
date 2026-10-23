@@ -4,7 +4,7 @@
 
 ## Goal
 
-A top-down snapshot of each of 10 tanks every 5 minutes, shown on the dashboard as a grid of per-tank Tankcams. Optional AI captions and oyster counts, like the existing Tankcam.
+A top-down snapshot of each of 10 tanks every 5 minutes, shown on the dashboard as a grid of per-tank Tankcams.
 
 ## Layout
 
@@ -44,7 +44,7 @@ One Pi per rack keeps the USB cables short. Three Pis for 10 tanks means each Pi
 
 These details matter more than the camera model.
 
-- **Top-down, fixed position.** Use the same framing every time, so captions and counts are comparable day to day. Mark the arm position.
+- **Top-down, fixed position.** Use the same framing every time, so frames are comparable day to day. Mark the arm position.
 - **Clearance and splash.** Mount 30–50 cm above the water, with a small hood or clear acrylic shield. Salt spray and condensation are the main way these cameras fail. Expect to wipe lenses during routine tank checks.
 - **Glare.** Overhead lights reflecting off the water hide the oysters. Angle the camera slightly off vertical, or add a cheap circular polarizer clip.
 - **Locked exposure and white balance.** Set them per camera with `v4l2-ctl` at boot, so frames don't drift with room lighting.
@@ -84,19 +84,10 @@ cp "$OUT/$TANK/$(date +%Y%m%d-%H%M).jpg" "$OUT/$TANK/latest.jpg"
 
 - **`scripts/update_tankcams.py`:** reads the three manifests from gannet and writes `data/tankcams.json`. It reuses the fallback-to-published-copy pattern.
 - **Tankcam grid:** the single Tankcam becomes a grid of 10 small tiles. Each shows the tank name, capture time and a stale badge, and enlarges on click. It can be linked to the matching card in Facility temperatures and the water-quality table.
-- **Captions (optional):** extend `caption_tankcam.py` to caption each tank at the same 2-hour slots. Each caption and oyster count would sit with its tank's tile. Cost scales with cameras:
-
-| Captions | 1 camera (now) | 10 cameras |
-|---|---|---|
-| Opus 5.5, 7×/day | ~$2–3/mo | ~$25/mo |
-| Haiku 4.5, 7×/day | <$1/mo | ~$6/mo |
-
-  Top-down views are what make an approximate oyster count possible. Treat counts as indicative, not as data.
 
 ## Open decisions
 
 1. Exact tank list and rack layout: how many cameras per Pi, and the cable runs.
 2. Is a PoE switch with free ports available near the racks? If so, use PoE HATs; otherwise wall power.
 3. A gannet account and path for uploads, which needs whoever manages gannet.
-4. Captions per tank: Opus or Haiku, and whether counts are wanted.
-5. Who checks lenses and mounts during routine tank checks.
+4. Who checks lenses and mounts during routine tank checks.

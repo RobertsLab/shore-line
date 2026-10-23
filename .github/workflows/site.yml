@@ -50,16 +50,6 @@ jobs:
       - name: Webcam frames
         run: python scripts/update_webcam.py
 
-      # Calls Claude only when a new 2-hour slot (6 AM-6 PM Pacific) starts;
-      # skipped quietly until the ANTHROPIC_API_KEY secret exists.
-      - name: Tankcam caption
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_WORKSPACE_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
-        run: |
-          pip install --quiet anthropic
-          python scripts/caption_tankcam.py
-
       - name: Water-quality reports
         run: python scripts/update_reports.py
 

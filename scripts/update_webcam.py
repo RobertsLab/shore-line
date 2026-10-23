@@ -4,7 +4,7 @@ Point the Tankcam at gannet's latest.jpg and write data/webcam.json.
 
 The camera overwrites v1_web/webcam/latest.jpg with each new frame. Its
 Last-Modified header gives the capture time, which is also appended to the
-URL (?t=<epoch>) so browsers and caption_tankcam.py see each frame as new.
+URL (?t=<epoch>) so browsers see each frame as new.
 
 Usage:
     python scripts/update_webcam.py

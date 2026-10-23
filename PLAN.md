@@ -8,7 +8,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 
 | Panel | Source | Updates | Notes |
 |---|---|---|---|
-| **Live Tankcam** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`; `update_webcam.py` points at `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Single latest snapshot with a stale badge. **AI caption** below it (see §3). |
+| **Live Tankcam** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`; `update_webcam.py` points at `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Single latest snapshot with a stale badge. |
 | **Latest tank water quality** | Values parsed from Jesse Lowe's tank-room posts (genefish RSS) | Every rebuild | Salinity, pH, alkalinity, NH₃, NO₂⁻, NO₃⁻ for each of the 4 tanks; "!" flags values outside thresholds |
 | **Facility temperatures** | `data/tanks.json` (hand-edited) + seneye feed | Seneye every 15 min | **Left Blue is live** (seneye). The other blue/yellow tanks show an 11 °C default setpoint. The heat-exposure system and room air are placeholders. |
 | **Field · Puget Sound water** | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend); adapted from `sr320/sr320` | Every rebuild | Headline reading + interactive 7-day chart; also writes the profile-style banner SVG |
@@ -19,7 +19,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 | **Research from SHORE** | `data/research.json` (hand-edited) | On edit | Featured cards + filterable list. **Still has a placeholder entry.** |
 | Header / footer | — | — | SHORE*line* wordmark, a status dot per feed (Tankcam, tank temps, water quality, Puget Sound), and an Instagram @robertslab.safs link in the footer |
 
-Tried and removed: the X (@genefish) panel (X's embedded timeline no longer works, and reading posts through X's API is paid) and the Instagram embed panel (replaced by the footer link). Also removed: the Tankcam's earlier-frames strip and motion-snapshot gallery.
+Tried and removed: the X (@genefish) panel (X's embedded timeline no longer works, and reading posts through X's API is paid) and the Instagram embed panel (replaced by the footer link). Also removed: the Tankcam's earlier-frames strip, motion-snapshot gallery, and AI captions.
 
 ## 2. How it runs
 
@@ -32,32 +32,20 @@ Tried and removed: the X (@genefish) panel (X's embedded timeline no longer work
 | Script | Output |
 |---|---|
 | `update_webcam.py` | `webcam.json` (latest frame) |
-| `caption_tankcam.py` | Adds `caption` to `webcam.json` (Claude, see §3) |
 | `update_reports.py` | `reports.json` (posts, per-tank latest readings, ~3-month history) |
 | `update_notebook.py` | `notebook.json` |
 | `update_logbook.py` | `logbook.json` (tank-room logbook sheet) |
 | `update_field_water.py` | `field-water.json` + `assets/water-banner.svg` |
-| `update_seneye.py` | `seneye.json`, copied from the seneye data branch (§4) |
+| `update_seneye.py` | `seneye.json`, copied from the seneye data branch (§3) |
 
 **Repo settings:**
 
 | Setting | Name | Value |
 |---|---|---|
-| Actions secret | `ANTHROPIC_API_KEY` | Claude API key for Tankcam captions |
-| Actions variable | `ANTHROPIC_WORKSPACE_ID` | `wrkspc_01QYGJ8tVrxdvdnkULR6jbZQ` (the key isn't scoped to a workspace) |
 | Actions variable | `SENEYE_URL` | Raw URL of `seneye.json` on the `seneye-data` branch |
 | Pages | Source | GitHub Actions |
 
-## 3. Tankcam AI captions
-
-`caption_tankcam.py` asks **Claude Opus 5.5** (low effort, structured JSON output, automatic retry on another model if a request is declined) to caption the latest frame.
-- **Schedule:** at most once per 2-hour slot from **6 AM to 6 PM Pacific** (7 a day), and only when the frame has changed.
-- **Cost:** about **$2–3/month**.
-- **Output:** the caption, people present, an approximate oyster count (only when oysters are visible), and anomaly flags. These show under the snapshot, labelled as AI-generated.
-- **Flags:** the lab chose to keep the current, fairly sensitive flags as they are.
-- **Failure:** any API failure keeps the previous caption.
-
-## 4. Seneye (Left Blue tank)
+## 3. Seneye (Left Blue tank)
 
 The Seneye Web Server is on a private UW address (`172.25.149.26`), which GitHub can't reach.
 - **Collector:** `collect_seneye.py` decodes the device's WebSocket state (it has no JSON API). It runs **every 15 min via launchd on sr320's Mac**, which must be on and on the UW network.
@@ -65,7 +53,7 @@ The Seneye Web Server is on a private UW address (`172.25.149.26`), which GitHub
 - **Install/update:** `scripts/install_seneye_agent.sh`. Log: `/tmp/shore-seneye.log`.
 - **Known state:** the pH/NH₃ slides are **expired**, so only temperature is shown until new slides are fitted.
 
-## 5. Next steps / roadmap
+## 4. Next steps / roadmap
 
 | Item | Status | Doc / next action |
 |---|---|---|
@@ -79,15 +67,14 @@ The Seneye Web Server is on a private UW address (`172.25.149.26`), which GitHub
 | **Wyze cameras** | Researched, not pursued | Would need docker-wyze-bridge; snapshot approach recommended if revisited |
 | Later | — | Alerts (e.g. Slack when a tank leaves tolerance or a gape monitor flags possible mortality), Crossref metadata for research items, custom domain |
 
-## 6. Decisions made
+## 5. Decisions made
 
 - **Hosting:** GitHub Pages under `RobertsLab`, public.
 - **Tankcam:** points at gannet's `latest.jpg` (replaced the folder-listing scraper). Single latest snapshot, renamed "Live Tankcam".
 - **Layout order:** Tankcam + latest water quality → facility temperatures → Puget Sound + reports → water-quality history → lab notebook → research.
-- **Captions:** Opus 5.5, every 2 h from 6 AM to 6 PM, current flag sensitivity kept.
 - **Social:** no embeds; Instagram link in the footer only.
 
-## 7. Open questions for the lab
+## 6. Open questions for the lab
 
 1. Are the lab members and spaces in the Tankcam frame (and future cameras) OK to show publicly?
 2. Tank list and rack layout for per-tank cameras and gape monitors.
