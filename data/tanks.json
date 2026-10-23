@@ -1,12 +1,7 @@
 {
- "_comment": "PLACEHOLDER. No temperature loggers are connected yet. Replace status/latest/series per system once a logger feed exists; the dashboard reads this schema unchanged. Blue and yellow tanks default to an 11 C setpoint; tolerance_c is null until the lab sets it.",
+ "_comment": "The panel shows only the tank with the seneye monitor. Its id must match the collector's --tank (left-blue); the live reading replaces latest/series. tolerance_c is null until the lab sets it.",
  "updated_at": null,
  "systems": [
-  {"id": "left-blue",    "name": "Left Blue tank",    "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
-  {"id": "right-blue",   "name": "Right Blue tank",   "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
-  {"id": "left-yellow",  "name": "Left Yellow tank",  "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
-  {"id": "right-yellow", "name": "Right Yellow tank", "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
-  {"id": "heat-exposure", "name": "Heat-exposure system", "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []},
-  {"id": "room-ambient", "name": "Tank room (air)",   "setpoint_c": null, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []}
+  {"id": "left-blue", "name": "Seneye Tank", "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []}
  ]
 }

@@ -5,7 +5,7 @@ UW network) into the site build as data/seneye.json.
 
 SENEYE_URL is where the collector's output is web-served (set as a GitHub
 Actions repository variable). Unset means no seneye yet: nothing is written
-and the Left Blue card stays a placeholder.
+and the Seneye Tank card shows its default setpoint.
 
 Usage:
     SENEYE_URL=https://.../seneye.json python scripts/update_seneye.py
