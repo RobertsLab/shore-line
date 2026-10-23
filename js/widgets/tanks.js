@@ -73,17 +73,15 @@ export function renderTanks(data, seneye) {
     const newest = new Date(Math.max(...live.map((s) => new Date(s.latest.t))));
     setStatus("tanks", freshness(newest, 60, 180), `${live.length} live sensor(s), latest ${ago(newest)}`);
   } else {
-    setStatus("tanks", "", "Placeholder: no loggers connected yet");
+    setStatus("tanks", "", "No seneye reading yet");
   }
-  meta.replaceChildren(el("span", { class: "badge",
-    text: live.length ? `${live.length} of ${systems.length} live · rest placeholder` : "placeholder data" }));
+  meta.replaceChildren(el("span", { class: "badge", text: live.length ? "live" : "no reading" }));
 
   body.replaceChildren(
     el("div", { class: "cards" }, systems.map(card)),
     el("p", { class: "note" },
-      live.length ? "Live cards are fed by sensors (Left Blue: seneye). " : "Temperature loggers are not yet connected. ",
-      "Other cards show the default setpoint from ",
+      "Fed by the seneye monitor. Without a recent reading the card shows the default setpoint from ",
       el("code", { text: "data/tanks.json" }),
-      " until a sensor is connected."),
+      "."),
   );
 }

@@ -10,7 +10,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 |---|---|---|---|
 | **Live Tankcam** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`; `update_webcam.py` points at `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Single latest snapshot with a stale badge. |
 | **Latest tank water quality** | Values parsed from Jesse Lowe's tank-room posts (genefish RSS) | Every rebuild | Salinity, pH, alkalinity, NH₃, NO₂⁻, NO₃⁻ for each of the 4 tanks; "!" flags values outside thresholds |
-| **Facility temperatures** | `data/tanks.json` (hand-edited) + seneye feed | Seneye every 15 min | **Left Blue is live** (seneye). The other blue/yellow tanks show an 11 °C default setpoint. The heat-exposure system and room air are placeholders. |
+| **Facility temperatures** | `data/tanks.json` (hand-edited) + seneye feed | Seneye every 15 min | Only the **Seneye Tank** (Left Blue) is shown, live from the seneye; the other tanks, heat-exposure system and room air were removed. |
 | **Field · Puget Sound water** | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend); adapted from `sr320/sr320` | Every rebuild | Headline reading + interactive 7-day chart; also writes the profile-style banner SVG |
 | **Water-quality & tank-room reports** | Jesse Lowe's genefish RSS | Every rebuild | 3 latest posts |
 | **Tank water quality · history** | The same parsed readings, ~3 months | Every rebuild | Chart by parameter, 1 or 3 months, fixed colors per tank |
@@ -59,7 +59,7 @@ The Seneye Web Server is on a private UW address (`172.25.149.26`), which GitHub
 |---|---|---|
 | **Tankcam stalled** | The camera stopped uploading to gannet at 5:10 PM on Oct 2 | Check the camera's FTP upload, power and network in the tank room |
 | **Research list** | Placeholder entry still showing | Add real SHORE papers, preprints and datasets to `data/research.json` |
-| **Tank setpoints / tolerances** | Blue/yellow tanks default to 11 °C, no tolerance | Set real values in `data/tanks.json`. Heat-exposure system and room air need setpoints. |
+| **Seneye Tank setpoint / tolerance** | Defaults to 11 °C, no tolerance | Set real values in `data/tanks.json` |
 | **Seneye hosting** | Runs on sr320's Mac | Move to gannet or a lab Pi (README has notes); fit new pH/NH₃ slides |
 | **Per-tank cameras** | Design done | [docs/tankcams-raspberry-pi.md](docs/tankcams-raspberry-pi.md): 3 Pis + 10 USB webcams, ~$560–680. Needs a tank list/layout, PoE availability, and a gannet upload account. |
 | **Valve-gape monitors** | Design done | [docs/gape-monitors-usb-pi.md](docs/gape-monitors-usb-pi.md): Adalogger + TLV493D over USB to a rack Pi; mortality/stress flags. Next: a one-logger pilot on sr320's Mac. |
