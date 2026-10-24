@@ -168,6 +168,16 @@ dialog.lightbox p { color: #EAF4F7; font: 13px var(--mono); text-align: center; 
 .card .sub { font: 12px var(--mono); color: var(--ink-3); margin-top: 6px; }
 .card svg.spark { width: 100%; height: 32px; margin-top: 8px; }
 .card svg.spark path { stroke: var(--idle); stroke-width: 1.5; fill: none; stroke-dasharray: 3 4; }
+.seneye-hist { margin-top: 18px; border-top: 1px solid var(--rule); padding-top: 14px; }
+.seneye-hist h3 { margin: 0; font: 600 14px var(--sans); }
+.seneye-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 4px 24px; }
+.seneye-charts figure { margin: 10px 0 0; }
+.seneye-charts figcaption { font: 12px var(--mono); color: var(--ink-2); }
+.seneye-charts .chart { margin-top: 6px; }
+.seneye-charts .chart svg { height: 180px; }
+.seneye-hist .concern { stroke: var(--bad); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.seneye-hist .concern-zone { fill: var(--bad); opacity: .07; }
+.seneye-hist .concern-label { fill: var(--bad); font: 600 11px var(--mono); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
 
 /* ---------- water quality ---------- */
 .table-scroll { overflow-x: auto; }

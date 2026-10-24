@@ -1,4 +1,5 @@
-import { ago, el, freshness, setStatus, slots } from "../util.js";
+import { ago, el, fill, freshness, setStatus, slots } from "../util.js";
+import { seneyeHistory } from "./seneye.js";
 
 function sparkPath(series, w = 160, h = 32) {
   if (!series?.length) {
@@ -77,8 +78,9 @@ export function renderTanks(data, seneye) {
   }
   meta.replaceChildren(el("span", { class: "badge", text: live.length ? "live" : "no reading" }));
 
-  body.replaceChildren(
+  fill(body,
     el("div", { class: "cards" }, systems.map(card)),
+    seneyeHistory(seneye, systems.find((s) => s.id === seneye?.tank)?.name),
     el("p", { class: "note" },
       "Fed by the seneye monitor. Without a recent reading the card shows the default setpoint from ",
       el("code", { text: "data/tanks.json" }),
