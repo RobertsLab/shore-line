@@ -127,6 +127,11 @@ main { padding: 24px 0 48px; }
 /* ---------- webcam ---------- */
 .cam-hero { position: relative; border-radius: 8px; overflow: hidden; background: var(--surface-2); aspect-ratio: 16 / 9; }
 .cam-hero img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+.cams { display: grid; gap: 12px; }
+.cams.multi { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.cam { margin: 0; }
+.cam figcaption { margin-top: 6px; font: 12px var(--mono); color: var(--ink-2); }
+.cam figcaption strong { color: var(--ink); }
 
 dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(96vw, 1400px); }
 dialog.lightbox::backdrop { background: rgba(5, 15, 20, .85); }
