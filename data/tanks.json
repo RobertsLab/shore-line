@@ -1,5 +1,11 @@
 {
  "_comment": "The panel shows only the tank with the seneye monitor. Its id must match the collector's --tank (left-blue); the live reading replaces latest/series. tolerance_c is null until the lab sets it.",
+ "_probes_comment": "Display names for the DS18B20 probes on the ESP32 hubs (data/shore-temps.json), keyed by probe ID. Unlisted probes appear as '<hub> · <last 4 of ID>'. Readings are raw, uncalibrated.",
+ "probes": {
+  "28CC7DBC79250B81": "Probe B1",
+  "28B27FB379250B13": "Probe B2",
+  "282107B179250BAF": "Probe B3"
+ },
  "updated_at": null,
  "systems": [
   {"id": "left-blue", "name": "Seneye Tank", "setpoint_c": 11.0, "tolerance_c": null, "status": "placeholder", "latest": null, "series": []}

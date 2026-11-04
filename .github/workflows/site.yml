@@ -40,7 +40,7 @@ jobs:
           mkdir -p _site
           cp -r index.html css js assets data _site/
           # Generated files are rebuilt below; drop any local copies.
-          rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json _site/data/seneye.json _site/data/notebook.json _site/data/logbook.json
+          rm -f _site/data/webcam.json _site/data/reports.json _site/data/field-water.json _site/data/seneye.json _site/data/shore-temps.json _site/data/notebook.json _site/data/logbook.json
           # Version CSS/JS URLs by commit so browsers drop cached copies on
           # each deploy (Pages serves them with a 10-min max-age).
           v=${GITHUB_SHA::7}
@@ -67,6 +67,10 @@ jobs:
         env:
           SENEYE_URL: ${{ vars.SENEYE_URL }}
         run: python scripts/update_seneye.py
+
+      # ESP32 probe hubs -> Gannet receiver (public raw CSVs).
+      - name: Tank probes (ESP32 hubs)
+        run: python scripts/update_shore_temps.py
 
       - uses: actions/upload-pages-artifact@v3
         with:

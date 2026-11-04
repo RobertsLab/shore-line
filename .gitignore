@@ -10,3 +10,4 @@ _site/
 __pycache__/
 .DS_Store
 .claude/worktrees/
+data/shore-temps.json
