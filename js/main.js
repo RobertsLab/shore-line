@@ -12,8 +12,8 @@ import { renderLogbook } from "./widgets/logbook.js";
 const WIDGETS = [
   { file: "data/webcam.json", feed: "webcam", render: renderWebcam, ids: ["webcam"], refreshSec: 60 },
   { file: "data/field-water.json", feed: "field", render: renderField, ids: ["field"], refreshSec: 600 },
-  // seneye.json is optional: absent until a collector is publishing it.
-  { file: "data/tanks.json", extra: "data/seneye.json", feed: "tanks", render: renderTanks, ids: ["tanks"], refreshSec: 300 },
+  // seneye.json and shore-temps.json are optional: absent until their feeds publish.
+  { file: "data/tanks.json", extra: ["data/seneye.json", "data/shore-temps.json"], feed: "tanks", render: renderTanks, ids: ["tanks"], refreshSec: 300 },
   { file: "data/reports.json", feed: "reports", render: (d) => { renderWaterQuality(d); renderReports(d); renderWqHistory(d); }, ids: ["wq", "reports", "wqh"], refreshSec: 900 },
   { file: "data/logbook.json", feed: "logbook", render: renderLogbook, ids: ["logbook"], refreshSec: 1800 },
   { file: "data/research.json", render: renderResearch, ids: ["research"] },
@@ -22,8 +22,8 @@ const WIDGETS = [
 
 async function load(w) {
   try {
-    const extra = w.extra ? await loadJSON(w.extra).catch(() => null) : undefined;
-    w.render(await loadJSON(w.file), extra);
+    const extra = await Promise.all((w.extra || []).map((f) => loadJSON(f).catch(() => null)));
+    w.render(await loadJSON(w.file), ...extra);
   } catch (err) {
     console.error(err);
     w.ids.forEach((id) => showError(id, `Could not load ${w.file}`));

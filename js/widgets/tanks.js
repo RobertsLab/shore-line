@@ -34,6 +34,20 @@ function withSeneye(sys, seneye) {
   };
 }
 
+// One card per DS18B20 probe on the ESP32 hubs (scripts/update_shore_temps.py).
+function probeSystems(feed, names = {}) {
+  return (feed?.probes || []).map((p) => ({
+    id: `probe-${p.id}`,
+    name: names[p.id] || `${p.hub} · ${p.id.slice(-4)}`,
+    setpoint_c: null,
+    status: "live",
+    source: p.hub,
+    latest: p.latest,
+    series: p.series || [],
+    extra: p.min_c != null ? `24 h range ${p.min_c.toFixed(2)}–${p.max_c.toFixed(2)} °C · raw, uncalibrated` : null,
+  })).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
 function card(sys) {
   const live = sys.status !== "placeholder" && sys.latest?.temp_c != null;
   const at = live && sys.latest.t ? new Date(sys.latest.t) : null;
@@ -59,22 +73,26 @@ function card(sys) {
     el("div", { class: "sub" },
       live ? `${sys.source || "sensor"} · ${ago(at)} ` : "Sensor not yet connected",
       live && level !== "ok" ? el("span", { class: `badge ${level}`, text: level === "warn" ? "delayed" : "stale" }) : null),
-    el("div", { class: "sub", text: sys.setpoint_c != null ? `${setpoint} (default)` : setpoint }),
+    sys.id.startsWith("probe-") ? null
+      : el("div", { class: "sub", text: sys.setpoint_c != null ? `${setpoint} (default)` : setpoint }),
     live && sys.alert ? el("div", { class: "sub", text: sys.alert }) : null,
     live && sys.extra ? el("div", { class: "sub", text: sys.extra }) : null,
   );
 }
 
-export function renderTanks(data, seneye) {
+export function renderTanks(data, seneye, probes) {
   const { meta, body } = slots("tanks");
-  const systems = (data.systems || []).map((s) => withSeneye(s, seneye));
+  const systems = [
+    ...(data.systems || []).map((s) => withSeneye(s, seneye)),
+    ...probeSystems(probes, data.probes),
+  ];
   const live = systems.filter((s) => s.status !== "placeholder" && s.latest?.t);
 
   if (live.length) {
     const newest = new Date(Math.max(...live.map((s) => new Date(s.latest.t))));
     setStatus("tanks", freshness(newest, 60, 180), `${live.length} live sensor(s), latest ${ago(newest)}`);
   } else {
-    setStatus("tanks", "", "No seneye reading yet");
+    setStatus("tanks", "", "No sensor reading yet");
   }
   meta.replaceChildren(el("span", { class: "badge", text: live.length ? "live" : "no reading" }));
 
@@ -82,7 +100,8 @@ export function renderTanks(data, seneye) {
     el("div", { class: "cards" }, systems.map(card)),
     seneyeHistory(seneye, systems.find((s) => s.id === seneye?.tank)?.name),
     el("p", { class: "note" },
-      "Fed by the seneye monitor. Without a recent reading the card shows the default setpoint from ",
+      "Seneye Tank is fed by the seneye monitor; without a recent reading it shows the default setpoint. ",
+      "Probe cards are DS18B20 probes on the ESP32 hubs (raw, uncalibrated, 10-min means). Names and setpoints live in ",
       el("code", { text: "data/tanks.json" }),
       "."),
   );

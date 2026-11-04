@@ -37,6 +37,7 @@ Tried and removed: the X (@genefish) panel (X's embedded timeline no longer work
 | `update_logbook.py` | `logbook.json` (tank-room logbook sheet) |
 | `update_field_water.py` | `field-water.json` + `assets/water-banner.svg` |
 | `update_seneye.py` | `seneye.json`, copied from the seneye data branch (§3) |
+| `update_shore_temps.py` | `shore-temps.json`: latest + 24 h 10-min series per probe, from the ESP32 hubs' raw CSVs on Gannet |
 
 **Repo settings:**
 
