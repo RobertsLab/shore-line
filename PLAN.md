@@ -8,7 +8,7 @@ A public dashboard for the **Shellfish Hardening & Organismal Resilience Experim
 
 | Panel | Source | Updates | Notes |
 |---|---|---|---|
-| **Live Tankcams** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`, plus a second camera at `v1_web/webcam_02/`; `update_webcam.py` points at each `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Latest snapshot per camera, side by side, each with its own stale badge. |
+| **Live Tankcams** | Reolink RLC-820A → FTP to gannet `v1_web/webcam/`, plus a second camera at `v1_web/webcam_02/` and a live HLS video stream at `v1_web/webcam_03/stream.m3u8`; `update_webcam.py` points at each `latest.jpg` and reads its capture time from Last-Modified | Every site rebuild (~10–20 min); page re-checks every 60 s | Live video (full width, kept playing across refreshes) above the latest snapshot per camera, each with its own badge. |
 | **Latest tank water quality** | Values parsed from Jesse Lowe's tank-room posts (genefish RSS) | Every rebuild | Salinity, pH, alkalinity, NH₃, NO₂⁻, NO₃⁻ for each of the 4 tanks; "!" flags values outside thresholds |
 | **Facility temperatures** | `data/tanks.json` (hand-edited) + seneye feed | Seneye every 15 min | Only the **Seneye Tank** (Left Blue) is shown, live from the seneye; the other tanks, heat-exposure system and room air were removed. |
 | **Field · Puget Sound water** | NOAA CO-OPS (Tacoma 9446484, fallback Port Townsend); adapted from `sr320/sr320` | Every rebuild | Headline reading + interactive 7-day chart; also writes the profile-style banner SVG |
