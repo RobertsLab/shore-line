@@ -130,6 +130,9 @@ main { padding: 24px 0 48px; }
 .cams { display: grid; gap: 12px; }
 .cams.multi { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .cam { margin: 0; }
+.cam.video { grid-column: 1 / -1; }
+.cam-hero video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
+.badge.live { color: var(--accent); }
 .cam figcaption { margin-top: 6px; font: 12px var(--mono); color: var(--ink-2); }
 .cam figcaption strong { color: var(--ink); }
 
