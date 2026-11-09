@@ -34,14 +34,20 @@ function withSeneye(sys, seneye) {
   };
 }
 
+// "shore-temps-a" -> "Hub A"; any other folder name is shown as-is.
+function hubLabel(hub) {
+  const m = /^shore-temps-([a-z0-9]+)$/i.exec(hub || "");
+  return m ? `Hub ${m[1].toUpperCase()}` : hub;
+}
+
 // One card per DS18B20 probe on the ESP32 hubs (scripts/update_shore_temps.py).
 function probeSystems(feed, names = {}) {
   return (feed?.probes || []).map((p) => ({
     id: `probe-${p.id}`,
-    name: names[p.id] || `${p.hub} · ${p.id.slice(-4)}`,
+    name: names[p.id] || `${hubLabel(p.hub)} · ${p.id.slice(-4)}`,
     setpoint_c: null,
     status: "live",
-    source: p.hub,
+    source: hubLabel(p.hub),
     latest: p.latest,
     series: p.series || [],
     extra: p.min_c != null ? `24 h range ${p.min_c.toFixed(2)}–${p.max_c.toFixed(2)} °C · raw, uncalibrated` : null,
