@@ -12,6 +12,9 @@ function sparkPath(series, w = 160, h = 32, now = Date.now()) {
     for (let x = 0; x <= w; x += 4) d += `${x ? "L" : "M"}${x},${(h / 2 + Math.sin(x / 14) * 5).toFixed(1)}`;
     return d;
   }
+  // Only points inside the window: older ones would all pile up at x = 0.
+  series = series.filter((p) => now - new Date(p[0]) <= WINDOW_MS);
+  if (!series.length) return "";  // nothing in the last 24 h: leave the chart empty
   const x = (t) => Math.max(0, Math.min(w, w - ((now - new Date(t)) / WINDOW_MS) * w)).toFixed(1);
   if (series.length < 2) return `M${x(series[0][0])},${h / 2} L${w},${h / 2}`;  // one reading so far
   const vs = series.map((p) => p[1]);
