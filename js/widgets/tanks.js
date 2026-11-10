@@ -1,18 +1,30 @@
-import { ago, el, fill, freshness, setStatus, slots } from "../util.js";
+import { ago, el, fill, formatTime, freshness, setStatus, slots } from "../util.js";
 import { seneyeHistory } from "./seneye.js";
 
-function sparkPath(series, w = 160, h = 32) {
+const WINDOW_MS = 24 * 3600e3;
+
+// x is time across the last 24 h (not sample index), so a short record or an
+// outage shows as empty space instead of being stretched across the card.
+function sparkPath(series, w = 160, h = 32, now = Date.now()) {
   if (!series?.length) {
     // gentle placeholder wave so the card reads as "a chart goes here"
     let d = "";
     for (let x = 0; x <= w; x += 4) d += `${x ? "L" : "M"}${x},${(h / 2 + Math.sin(x / 14) * 5).toFixed(1)}`;
     return d;
   }
-  if (series.length < 2) return `M0,${h / 2} L${w},${h / 2}`;  // one reading so far
+  const x = (t) => Math.max(0, Math.min(w, w - ((now - new Date(t)) / WINDOW_MS) * w)).toFixed(1);
+  if (series.length < 2) return `M${x(series[0][0])},${h / 2} L${w},${h / 2}`;  // one reading so far
   const vs = series.map((p) => p[1]);
   const lo = Math.min(...vs), hi = Math.max(...vs), span = Math.max(hi - lo, 0.2);
   return series.map((p, i) =>
-    `${i ? "L" : "M"}${((i / (series.length - 1)) * w).toFixed(1)},${(h - 3 - ((p[1] - lo) / span) * (h - 6)).toFixed(1)}`).join(" ");
+    `${i ? "L" : "M"}${x(p[0])},${(h - 3 - ((p[1] - lo) / span) * (h - 6)).toFixed(1)}`).join(" ");
+}
+
+// "24 h range" only when the record actually spans ~24 h; else say since when.
+function rangeLabel(series) {
+  const first = series?.length ? new Date(series[0][0]) : null;
+  if (!first || Date.now() - first > WINDOW_MS - 3600e3) return "24 h range";
+  return `Range since ${formatTime(first)}`;
 }
 
 // Fold a seneye feed (scripts/collect_seneye.py) into its tank's system.
@@ -50,7 +62,7 @@ function probeSystems(feed, names = {}) {
     source: hubLabel(p.hub),
     latest: p.latest,
     series: p.series || [],
-    extra: p.min_c != null ? `24 h range ${p.min_c.toFixed(2)}–${p.max_c.toFixed(2)} °C · raw, uncalibrated` : null,
+    extra: p.min_c != null ? `${rangeLabel(p.series)}: ${p.min_c.toFixed(1)}\u2060–\u2060${p.max_c.toFixed(1)}\u00a0°C · raw, uncalibrated` : null,
   })).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 }
 
@@ -73,7 +85,7 @@ function card(sys) {
     el("h3", { text: sys.name }),
     // Without a sensor, show the setpoint (muted, labelled) rather than a blank.
     el("div", { class: "reading" },
-      live ? sys.latest.temp_c.toFixed(2) : sys.setpoint_c != null ? sys.setpoint_c.toFixed(1) : "––.–",
+      live ? sys.latest.temp_c.toFixed(1) : sys.setpoint_c != null ? sys.setpoint_c.toFixed(1) : "––.–",
       el("small", { text: " °C" })),
     spark,
     el("div", { class: "sub" },
@@ -107,7 +119,9 @@ export function renderTanks(data, seneye, probes) {
     seneyeHistory(seneye, systems.find((s) => s.id === seneye?.tank)?.name),
     el("p", { class: "note" },
       "Seneye Tank is fed by the seneye monitor; without a recent reading it shows the default setpoint. ",
-      "Probe cards are DS18B20 probes on the ESP32 hubs (raw, uncalibrated, 10-min means). Names and setpoints live in ",
+      "Probe cards are DS18B20 probes on the ESP32 hubs (raw, uncalibrated; about ±0.5 °C). ",
+      "The large number is the latest reading; the line is 10-min means across the last 24 h, each card on its own scale. ",
+      "Names and setpoints live in ",
       el("code", { text: "data/tanks.json" }),
       "."),
   );
